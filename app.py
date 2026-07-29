@@ -104,6 +104,7 @@ def profile():
             "age": request.form.get("age", ""),
             "concerns": request.form.get("concerns", ""),
             "sensitivities": request.form.get("sensitivities", ""),
+            "allergies": request.form.get("allergies", ""),
             "climate": request.form.get("climate", ""),
         }
 
