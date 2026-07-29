@@ -51,6 +51,7 @@ def init_db():
             age TEXT,
             concerns TEXT,
             sensitivities TEXT,
+            allergies TEXT,
             climate TEXT,
             FOREIGN KEY (user_id) REFERENCES users (id)
         )
@@ -111,16 +112,16 @@ def save_profile(user_id, data):
     if existing:
         cur.execute("""
             UPDATE profiles
-            SET skin_type = ?, age = ?, concerns = ?, sensitivities = ?, climate = ?
+            SET skin_type = ?, age = ?, concerns = ?, sensitivities = ?, allergies = ?, climate = ?
             WHERE user_id = ?
         """, (data["skin_type"], data["age"], data["concerns"],
-              data["sensitivities"], data["climate"], user_id))
+              data["sensitivities"], data["allergies"], data["climate"], user_id))
     else:
         cur.execute("""
-            INSERT INTO profiles (user_id, skin_type, age, concerns, sensitivities, climate)
-            VALUES (?, ?, ?, ?, ?, ?)
+            INSERT INTO profiles (user_id, skin_type, age, concerns, sensitivities, allergies, climate)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         """, (user_id, data["skin_type"], data["age"], data["concerns"],
-              data["sensitivities"], data["climate"]))
+              data["sensitivities"], data["allergies"], data["climate"]))
 
     conn.commit()
     conn.close()
