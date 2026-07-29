@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Lumé - My Profile{% endblock %}
+{% block content %}
+<div class="topbar">
+    <span style="color:#6B4E8C;font-size:0.85rem;">{{ session.email }}</span>
+    <a href="{{ url_for('logout') }}">Log out</a>
+</div>
+<div class="card">
+    <h2>My Skin Profile</h2>
+    <form method="POST" action="{{ url_for('profile') }}">
+        <label for="skin_type">Skin type</label>
+        <select id="skin_type" name="skin_type" required>
+            {% set st = profile.skin_type if profile else '' %}
+            <option value="" {% if not st %}selected{% endif %}>Choose...</option>
+            <option value="Oily" {% if st=='Oily' %}selected{% endif %}>Oily</option>
+            <option value="Dry" {% if st=='Dry' %}selected{% endif %}>Dry</option>
+            <option value="Combination" {% if st=='Combination' %}selected{% endif %}>Combination</option>
+            <option value="Normal" {% if st=='Normal' %}selected{% endif %}>Normal</option>
+            <option value="Sensitive" {% if st=='Sensitive' %}selected{% endif %}>Sensitive</option>
+        </select>
+
+        <label for="age">Age</label>
+        <input type="number" id="age" name="age" min="12" max="120"
+               value="{{ profile.age if profile else '' }}">
+
+        <label for="concerns">Main concerns</label>
+        <input type="text" id="concerns" name="concerns"
+               placeholder="e.g. acne, dark spots, fine lines"
+               value="{{ profile.concerns if profile else '' }}">
+
+        <label for="sensitivities">Sensitivities</label>
+        <input type="text" id="sensitivities" name="sensitivities"
+               placeholder="e.g. fragrance, retinol"
+               value="{{ profile.sensitivities if profile else '' }}">
+
+        <label for="climate">Climate</label>
+        <select id="climate" name="climate" required>
+            {% set cl = profile.climate if profile else '' %}
+            <option value="" {% if not cl %}selected{% endif %}>Choose...</option>
+            <option value="Hot & humid" {% if cl=='Hot & humid' %}selected{% endif %}>Hot &amp; humid</option>
+            <option value="Hot & dry" {% if cl=='Hot & dry' %}selected{% endif %}>Hot &amp; dry</option>
+            <option value="Cool & humid" {% if cl=='Cool & humid' %}selected{% endif %}>Cool &amp; humid</option>
+            <option value="Cool & dry" {% if cl=='Cool & dry' %}selected{% endif %}>Cool &amp; dry</option>
+            <option value="Temperate" {% if cl=='Temperate' %}selected{% endif %}>Temperate</option>
+        </select>
+
+        <button type="submit" class="btn">Save &amp; continue</button>
+    </form>
+    <p class="hint">Next sprint: generate your AI routine from this profile.</p>
+</div>
+{% endblock %}

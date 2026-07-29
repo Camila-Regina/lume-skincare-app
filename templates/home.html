@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Lumé - Welcome{% endblock %}
+{% block content %}
+<div class="card">
+    <h2>Welcome to Lumé</h2>
+    <p style="color:#666;font-size:0.95rem;line-height:1.5;">
+        Personalised skincare routines, built around your skin, your climate
+        and the products you already own.
+    </p>
+    <a href="{{ url_for('register') }}"><button class="btn">Create your account</button></a>
+    <a href="{{ url_for('login') }}"><button class="btn btn-secondary">Log in</button></a>
+</div>
+{% endblock %}
