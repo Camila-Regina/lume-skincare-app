@@ -1,0 +1,122 @@
+/* Lumé stylesheet - lilac and blush theme
+   Colours match the branding used in the project documents. */
+
+:root {
+  --lilac: #9B7EBD;
+  --lilac-deep: #6B4E8C;
+  --blush: #D16BA5;
+  --blush-light: #FBEEF4;
+  --lilac-light: #F3EEF8;
+  --text: #2E2A33;
+  --grey: #8A8A8A;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background: linear-gradient(160deg, var(--lilac-light), var(--blush-light));
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.brand {
+  font-size: 2.4rem;
+  font-weight: bold;
+  font-style: italic;
+  color: var(--lilac-deep);
+  margin: 24px 0 4px;
+  letter-spacing: 1px;
+}
+.tagline {
+  color: var(--grey);
+  font-size: 0.95rem;
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.card {
+  background: #fff;
+  width: 100%;
+  max-width: 420px;
+  border-radius: 18px;
+  padding: 32px 28px;
+  box-shadow: 0 8px 30px rgba(107, 78, 140, 0.12);
+}
+.card h2 {
+  color: var(--lilac-deep);
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+}
+
+label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--grey);
+  margin: 14px 0 5px;
+}
+input, select {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  background: #fff;
+}
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--lilac);
+  box-shadow: 0 0 0 3px rgba(155, 126, 189, 0.15);
+}
+
+.btn {
+  width: 100%;
+  margin-top: 22px;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: var(--blush);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn:hover { background: #b8558f; }
+.btn-secondary { background: var(--lilac-deep); }
+.btn-secondary:hover { background: #573f73; }
+
+.link {
+  display: block;
+  text-align: center;
+  margin-top: 16px;
+  color: var(--lilac-deep);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+.link:hover { text-decoration: underline; }
+
+.flash {
+  background: var(--blush-light);
+  border: 1px solid var(--blush);
+  color: #a33f78;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+}
+
+.topbar {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.topbar a { color: var(--lilac-deep); text-decoration: none; font-size: 0.85rem; }
+.hint { color: var(--grey); font-size: 0.8rem; text-align: center; margin-top: 18px; }
