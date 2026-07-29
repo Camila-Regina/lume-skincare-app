@@ -7,7 +7,7 @@
 </div>
 <div class="card">
     <h2>My Skin Profile</h2>
-    <form method="POST" action="{{ url_for('profile') }}">
+    <form method="POST" action="{{ url_for('profile') }}" autocomplete="off">
         <label for="skin_type">Skin type</label>
         <select id="skin_type" name="skin_type" required>
             {% set st = profile.skin_type if profile else '' %}
@@ -32,6 +32,11 @@
         <input type="text" id="sensitivities" name="sensitivities"
                placeholder="e.g. fragrance, retinol"
                value="{{ profile.sensitivities if profile else '' }}">
+
+        <label for="allergies">Allergies</label>
+        <input type="text" id="allergies" name="allergies"
+               placeholder="ingredients you must avoid completely"
+               value="{{ profile.allergies if profile else '' }}">
 
         <label for="climate">Climate</label>
         <select id="climate" name="climate" required>
