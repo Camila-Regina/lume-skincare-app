@@ -1,0 +1,13 @@
+# Local database, created automatically, do not upload
+*.db
+
+# Python temporary files
+__pycache__/
+*.pyc
+
+# Virtual environment, if you make one
+venv/
+.venv/
+
+# API key, when the AI part comes, never upload this
+.env
