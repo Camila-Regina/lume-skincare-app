@@ -51,7 +51,7 @@ def register():
             return render_template("register.html")
 
         # Store the password as a hash, never as plain text.
-        password_hash = generate_password_hash(password)
+        password_hash = generate_password_hash(password, method="pbkdf2:sha256")
         user_id = database.create_user(email, password_hash)
 
         # Log the new user in by saving their id in the session.
