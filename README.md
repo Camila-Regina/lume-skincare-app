@@ -2,7 +2,7 @@
 # Lumé, smart care for your natural glow
 
 A web application that builds personalised skincare routines using AI.
-Higher Diploma in Science in Computing, National College of Ireland. Final Project.
+Higher Diploma in Science in Computing, National College of Ireland. Final project.
 
 ## Current status (Sprint 1)
 - User registration and login (passwords hashed)

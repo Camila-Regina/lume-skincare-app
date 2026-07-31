@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% block title %}Lumé - My Profile{% endblock %}
 {% block content %}
-<div class="topbar">
-    <span style="color:#6B4E8C;font-size:0.85rem;">{{ session.email }}</span>
-    <a href="{{ url_for('logout') }}">Log out</a>
-</div>
+<p style="width:100%;max-width:420px;color:#8A8A8A;font-size:0.82rem;margin-bottom:4px;">Hi, {{ session.name }}</p>
 <div class="card">
     <h2>My Skin Profile</h2>
+    <p style="color:#666;font-size:0.9rem;margin-bottom:6px;">
+        Tell us about your skin, {{ session.name }}.
+    </p>
     <form method="POST" action="{{ url_for('profile') }}" autocomplete="off">
         <label for="skin_type">Skin type</label>
         <select id="skin_type" name="skin_type" required>
@@ -20,11 +20,11 @@
         </select>
 
         <label for="age">Age</label>
-        <input type="number" id="age" name="age" min="12" max="120"
+        <input type="number" id="age" name="age" min="12" max="120" required
                value="{{ profile.age if profile else '' }}">
 
         <label for="concerns">Main concerns</label>
-        <input type="text" id="concerns" name="concerns"
+        <input type="text" id="concerns" name="concerns" required
                placeholder="e.g. acne, dark spots, fine lines"
                value="{{ profile.concerns if profile else '' }}">
 
@@ -51,6 +51,5 @@
 
         <button type="submit" class="btn">Save &amp; continue</button>
     </form>
-    <p class="hint">Next sprint: generate your AI routine from this profile.</p>
 </div>
 {% endblock %}

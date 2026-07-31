@@ -36,6 +36,7 @@ def init_db():
     cur.execute("""
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT,
             email TEXT UNIQUE NOT NULL,
             password_hash TEXT NOT NULL
         )
@@ -57,19 +58,45 @@ def init_db():
         )
     """)
 
+    # Products table: the products a user already owns.
+    # Here user_id is NOT unique, because one user can own many products.
+    # This is a one to many relationship, unlike the profile.
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS products (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            name TEXT NOT NULL,
+            type TEXT NOT NULL,
+            FOREIGN KEY (user_id) REFERENCES users (id)
+        )
+    """)
+
+    # Routines table: the AI generated routines a user has saved.
+    # A user can have many routines over time, so user_id is not unique.
+    # The routine itself is stored as JSON text in one column.
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS routines (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            routine_json TEXT NOT NULL,
+            created_at TEXT NOT NULL,
+            FOREIGN KEY (user_id) REFERENCES users (id)
+        )
+    """)
+
     conn.commit()
     conn.close()
 
 
 # ---- User operations (part of CRUD: create and read) ----
 
-def create_user(email, password_hash):
+def create_user(name, email, password_hash):
     """Insert a new user and return their new id."""
     conn = get_connection()
     cur = conn.cursor()
     cur.execute(
-        "INSERT INTO users (email, password_hash) VALUES (?, ?)",
-        (email, password_hash),
+        "INSERT INTO users (name, email, password_hash) VALUES (?, ?, ?)",
+        (name, email, password_hash),
     )
     conn.commit()
     user_id = cur.lastrowid
@@ -125,3 +152,83 @@ def save_profile(user_id, data):
 
     conn.commit()
     conn.close()
+
+
+# ---- Product operations (create, read, delete) ----
+
+def add_product(user_id, name, product_type):
+    """Add one product to a user's list."""
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute(
+        "INSERT INTO products (user_id, name, type) VALUES (?, ?, ?)",
+        (user_id, name, product_type),
+    )
+    conn.commit()
+    conn.close()
+
+
+def get_products(user_id):
+    """Return all products that belong to a user, as a list."""
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM products WHERE user_id = ? ORDER BY id", (user_id,))
+    products = cur.fetchall()
+    conn.close()
+    return products
+
+
+def delete_product(product_id, user_id):
+    """Delete one product, but only if it belongs to this user.
+
+    Checking user_id here is a safety step: it stops a user from
+    deleting a product that is not theirs.
+    """
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute(
+        "DELETE FROM products WHERE id = ? AND user_id = ?",
+        (product_id, user_id),
+    )
+    conn.commit()
+    conn.close()
+
+
+# ---- Routine operations (create and read) ----
+
+def save_routine(user_id, routine_json, created_at):
+    """Save one generated routine for a user, stored as JSON text."""
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute(
+        "INSERT INTO routines (user_id, routine_json, created_at) VALUES (?, ?, ?)",
+        (user_id, routine_json, created_at),
+    )
+    conn.commit()
+    conn.close()
+
+
+def get_latest_routine(user_id):
+    """Return the most recent saved routine for a user, or None."""
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute(
+        "SELECT * FROM routines WHERE user_id = ? ORDER BY id DESC LIMIT 1",
+        (user_id,),
+    )
+    routine = cur.fetchone()
+    conn.close()
+    return routine
+
+
+def get_all_routines(user_id):
+    """Return all saved routines for a user, newest first."""
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute(
+        "SELECT * FROM routines WHERE user_id = ? ORDER BY id DESC",
+        (user_id,),
+    )
+    routines = cur.fetchall()
+    conn.close()
+    return routines

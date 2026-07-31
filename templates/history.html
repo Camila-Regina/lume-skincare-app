@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Lumé - My Past Routines{% endblock %}
+{% block content %}
+<p style="width:100%;max-width:420px;color:#8A8A8A;font-size:0.82rem;margin-bottom:4px;">Hi, {{ session.name }}</p>
+<div class="card">
+    <h2>My Past Routines</h2>
+    <p style="color:#666;font-size:0.9rem;margin-bottom:6px;">
+        Every routine you have created, {{ session.name }}. See how your care evolves.
+    </p>
+
+    {% if past %}
+        {% for item in past %}
+        <div style="border:1px solid #E5DCEC;border-radius:10px;padding:14px;margin-bottom:14px;">
+            <p style="color:#D16BA5;font-weight:bold;font-size:0.85rem;margin-bottom:8px;">
+                {{ item.created_at }}
+            </p>
+
+            <p style="color:#6B4E8C;font-size:0.8rem;font-weight:bold;">Morning</p>
+            {% for step in item.routine.morning %}
+            <p style="font-size:0.82rem;color:#333;">{{ loop.index }}. {{ step }}</p>
+            {% endfor %}
+
+            <p style="color:#6B4E8C;font-size:0.8rem;font-weight:bold;margin-top:8px;">Evening</p>
+            {% for step in item.routine.evening %}
+            <p style="font-size:0.82rem;color:#333;">{{ loop.index }}. {{ step }}</p>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    {% else %}
+        <p style="color:#8A8A8A;font-size:0.9rem;">
+            You have not created any routines yet.
+        </p>
+    {% endif %}
+
+    <a href="{{ url_for('routine') }}" class="link">Back to my routine</a>
+</div>
+{% endblock %}

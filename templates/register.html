@@ -4,6 +4,9 @@
 <div class="card">
     <h2>Create your account</h2>
     <form method="POST" action="{{ url_for('register') }}">
+        <label for="name">Your name</label>
+        <input type="text" id="name" name="name" required>
+
         <label for="email">Email</label>
         <input type="email" id="email" name="email" required>
 

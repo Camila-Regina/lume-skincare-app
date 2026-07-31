@@ -120,3 +120,26 @@ input:focus, select:focus {
 }
 .topbar a { color: var(--lilac-deep); text-decoration: none; font-size: 0.85rem; }
 .hint { color: var(--grey); font-size: 0.8rem; text-align: center; margin-top: 18px; }
+
+/* Navigation bar, shown at the top when the user is logged in */
+.navbar {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+  padding: 10px 14px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(107, 78, 140, 0.08);
+}
+.navbar a {
+  color: var(--lilac-deep);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+.navbar a:hover { color: var(--blush); }
+.navbar-logout { color: var(--grey) !important; font-weight: normal !important; }

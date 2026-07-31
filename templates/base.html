@@ -10,6 +10,16 @@
     <div class="brand">Lumé</div>
     <div class="tagline">smart care for your natural glow</div>
 
+    {% if session.user_id %}
+    <nav class="navbar">
+        <a href="{{ url_for('profile') }}">Profile</a>
+        <a href="{{ url_for('products') }}">Products</a>
+        <a href="{{ url_for('routine') }}">Routine</a>
+        <a href="{{ url_for('history') }}">History</a>
+        <a href="{{ url_for('logout') }}" class="navbar-logout">Log out</a>
+    </nav>
+    {% endif %}
+
     {% with messages = get_flashed_messages() %}
       {% if messages %}
         <div style="width:100%;max-width:420px;">

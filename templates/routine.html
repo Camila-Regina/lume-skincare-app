@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}Lumé - My Routine{% endblock %}
+{% block content %}
+<p style="width:100%;max-width:420px;color:#8A8A8A;font-size:0.82rem;margin-bottom:4px;">Hi, {{ session.name }}</p>
+<div class="card">
+    {% if routine %}
+    <h2>{{ session.name }}, a routine made just for you</h2>
+    <p style="color:#666;font-size:0.9rem;margin-bottom:6px;">
+        Here's your personalised routine, crafted for your skin.
+    </p>
+    {% else %}
+    <h2>Your Routine</h2>
+    {% endif %}
+
+    <form method="POST" action="{{ url_for('routine') }}" style="margin-bottom:8px;">
+        <button type="submit" class="btn">
+            {% if routine %}Generate a new routine{% else %}Generate my routine{% endif %}
+        </button>
+    </form>
+
+    {% if routine %}
+        {% if created_at %}
+        <p style="color:#8A8A8A;font-size:0.8rem;text-align:center;">Created {{ created_at }}</p>
+        {% endif %}
+
+        <h2 style="font-size:1.05rem;margin-top:20px;">Morning</h2>
+        {% for step in routine.morning %}
+        <div style="background:#F3EEF8;border-radius:8px;padding:9px 14px;margin-bottom:6px;font-size:0.9rem;">
+            {{ loop.index }}. {{ step }}
+        </div>
+        {% endfor %}
+
+        <h2 style="font-size:1.05rem;margin-top:20px;">Evening</h2>
+        {% for step in routine.evening %}
+        <div style="background:#F3EEF8;border-radius:8px;padding:9px 14px;margin-bottom:6px;font-size:0.9rem;">
+            {{ loop.index }}. {{ step }}
+        </div>
+        {% endfor %}
+
+        {% if routine.suggestions %}
+        <h2 style="font-size:1.05rem;margin-top:20px;color:#D16BA5;">Suggested for you</h2>
+        {% for s in routine.suggestions %}
+        <div style="background:#FBEEF4;border:1px solid #D16BA5;border-radius:8px;padding:10px 14px;margin-bottom:8px;">
+            <strong style="font-size:0.9rem;">{{ s.type }}</strong>
+            <p style="color:#666;font-size:0.82rem;margin-top:3px;">{{ s.reason }}</p>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        <div style="background:#F3EEF8;border-radius:8px;padding:12px 14px;margin-top:18px;">
+            <p style="color:#6B4E8C;font-size:0.85rem;line-height:1.4;">
+                Your skin changes with the seasons, {{ session.name }}.
+                Come back and refresh your routine when the weather shifts.
+            </p>
+        </div>
+
+        <p style="color:#8A8A8A;font-size:0.75rem;margin-top:16px;line-height:1.4;">
+            These are general skincare suggestions, not medical advice.
+            For any serious skin condition, please see a dermatologist.
+        </p>
+
+        <a href="{{ url_for('history') }}" class="link">See my past routines</a>
+    {% else %}
+        <p style="color:#8A8A8A;font-size:0.9rem;">
+            Your routine is just a tap away, {{ session.name }}. Make sure your
+            profile and products are filled in, then generate your routine.
+        </p>
+    {% endif %}
+
+    <a href="{{ url_for('products') }}" class="link">Back to my products</a>
+</div>
+{% endblock %}
